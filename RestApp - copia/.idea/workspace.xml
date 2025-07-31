@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fd6834a3-c561-46d6-8a22-4a228e1bbaea" name="Changes" comment="api 1.0" />
+    <list default="true" id="fd6834a3-c561-46d6-8a22-4a228e1bbaea" name="Changes" comment="api 1.0">
+      <change beforePath="$PROJECT_DIR$/../javalin-tuto" beforeDir="false" afterPath="$PROJECT_DIR$/../javalin-tuto" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -59,7 +61,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -67,12 +69,12 @@
     &quot;assignee&quot;: &quot;cesar160&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/EdwarDa2/template_api.git&quot;,
-    &quot;accountId&quot;: &quot;50fae2b5-e5b8-46f6-a72e-f84abe01c132&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/AngelChame/A03.Repositorio_API_Rest.git",
+    "accountId": "b85333a4-d0d1-4545-bff3-7546b9e8c2b6"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -252,7 +254,7 @@
       <workItem from="1753771404201" duration="4513000" />
       <workItem from="1753852677022" duration="23000" />
       <workItem from="1753940683733" duration="56000" />
-      <workItem from="1753942143321" duration="11000" />
+      <workItem from="1753942143321" duration="620000" />
     </task>
     <task id="LOCAL-00001" summary="AVISOSNEW">
       <option name="closed" value="true" />
