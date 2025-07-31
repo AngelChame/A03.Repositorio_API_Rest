@@ -1,0 +1,302 @@
+Index: src/main/java/org/EdwarDa2/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.EdwarDa2;\r\nimport io.javalin.Javalin;\r\nimport io.javalin.plugin.bundled.CorsPluginConfig;\r\nimport org.EdwarDa2.di.AppModule;\r\npublic class Main {\r\n    public static void main(String[] args) {\r\n\r\n        Javalin app = Javalin.create(config -> {\r\n            config.bundledPlugins.enableCors(cors -> {\r\n                cors.addRule(CorsPluginConfig.CorsRule::anyHost);\r\n            });\r\n        }).start(7000);\r\n\r\n        app.get(\"/\", ctx -> ctx.result(\"API Javalin 2\"));\r\n\r\n        AppModule.initProductos().register(app);\r\n        AppModule.initMesas().register(app);\r\n        AppModule.initComandas().register(app);\r\n        AppModule.initCategorias().register(app);\r\n        AppModule.initMeseros().register(app);\r\n        AppModule.initTotal().register(app);\r\n        AppModule.initRol().register(app);\r\n        AppModule.initAdmins().register(app);\r\n        AppModule.initAvisos().register(app);\r\n        AppModule.initStats().register(app);\r\n        AppModule.initLogin().register(app);\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/EdwarDa2/Main.java b/src/main/java/org/EdwarDa2/Main.java
+--- a/src/main/java/org/EdwarDa2/Main.java	(revision 326f86c065ee5bd9fa0ee2f26c962c1fce03678c)
++++ b/src/main/java/org/EdwarDa2/Main.java	(date 1753485611625)
+@@ -24,5 +24,6 @@
+         AppModule.initAvisos().register(app);
+         AppModule.initStats().register(app);
+         AppModule.initLogin().register(app);
++        AppModule.initUser().register(app);
+     }
+ }
+\ No newline at end of file
+Index: src/main/java/org/EdwarDa2/di/AppModule.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.EdwarDa2.di;\r\n\r\nimport io.javalin.Javalin;\r\nimport org.EdwarDa2.controller.*;\r\nimport org.EdwarDa2.repository.*;\r\nimport org.EdwarDa2.routes.*;\r\nimport org.EdwarDa2.service.*;\r\n\r\nimport static java.rmi.Naming.bind;\r\n\r\npublic class AppModule {\r\n\r\n\r\n    public static MesasRoutes initMesas() {\r\n        MesasRepository mesasRepository = new MesasRepository();\r\n        MesasService mesasService = new MesasService(mesasRepository);\r\n        MesasController mesasController = new MesasController(mesasService);\r\n        MesasRoutes mesasRoutes = new MesasRoutes(mesasController);\r\n        return mesasRoutes;\r\n\r\n    }\r\n\r\n    public static ComandaRoutes initComandas() {\r\n        ComandaRepository comandaRepository = new ComandaRepository();\r\n        ComandaService comandaService = new ComandaService(comandaRepository);\r\n        ComandaController comandaController = new ComandaController(comandaService);\r\n        ComandaRoutes comandaRoutes = new ComandaRoutes(comandaController);\r\n        return comandaRoutes;\r\n    }\r\n\r\n    public static CategoriaRoutes initCategorias() {\r\n        CategoriaRepository categoriaRepository = new CategoriaRepository();\r\n        CategoriaService categoriaService = new CategoriaService(categoriaRepository);\r\n        CategoriaController categoriaController = new CategoriaController(categoriaService);\r\n        CategoriaRoutes categoriaRoutes = new CategoriaRoutes(categoriaController);\r\n        return categoriaRoutes;\r\n    }\r\n\r\n    public static MeseroRoutes initMeseros() {\r\n        MeseroRepository meseroRepository = new MeseroRepository();\r\n        MeseroService meseroService = new MeseroService(meseroRepository);\r\n        MeseroController meseroController = new MeseroController(meseroService);\r\n        MeseroRoutes meseroRoutes = new MeseroRoutes(meseroController);\r\n        return meseroRoutes;\r\n\r\n    }\r\n\r\n    public static TotalRoutes initTotal() {\r\n        TotalRepository totalRepository = new TotalRepository();\r\n        TotalService totalService = new TotalService(totalRepository);\r\n        TotalController totalController = new TotalController(totalService);\r\n        TotalRoutes totalRoutes = new TotalRoutes(totalController);\r\n        return totalRoutes;\r\n\r\n    }\r\n\r\n    public static RolRoutes initRol() {\r\n        RolRepository rolRepository = new RolRepository();\r\n        RolService rolService = new RolService(rolRepository);\r\n        RolController rolController = new RolController(rolService);\r\n        RolRoutes rolRoutes = new RolRoutes(rolController);\r\n        return rolRoutes;\r\n    }\r\n\r\n    public static AdminRoutes initAdmins() {\r\n        AdminRepository adminRepository = new AdminRepository();\r\n        AdminService adminService = new AdminService(adminRepository);\r\n        AdminController adminController = new AdminController(adminService);\r\n        AdminRoutes adminRoutes = new AdminRoutes(adminController);\r\n        return adminRoutes;\r\n    }\r\n\r\n    public static AvisosRoutes initAvisos() {\r\n        AvisosRepository avisosRepository = new AvisosRepository();\r\n        AvisosService avisosService = new AvisosService(avisosRepository);\r\n        AvisosController avisosController = new AvisosController(avisosService);\r\n        AvisosRoutes avisosRoutes = new AvisosRoutes(avisosController);\r\n        return avisosRoutes;\r\n    }\r\n\r\n    public static StatsRoutes initStats() {\r\n        StatsRepository statsRepository = new StatsRepository();\r\n        StatsService statsService = new StatsService(statsRepository);\r\n        StatsController statsController = new StatsController(statsService);\r\n        StatsRoutes statsRoutes = new StatsRoutes(statsController);\r\n        return statsRoutes;\r\n    }\r\n\r\n    public static ProductoRoutes initProductos() {\r\n        ProductoRepository productoRepository = new ProductoRepository();\r\n        ProductoService productoService = new ProductoService(productoRepository);\r\n        CategoriaService categoriaService = new CategoriaService(new CategoriaRepository());\r\n        SubcategoriaService subcategoriaService = new SubcategoriaService(new SubcategoriaRepository());\r\n        ProductoController productoController = new ProductoController(productoService, categoriaService, subcategoriaService);\r\n        ProductoRoutes productoRoutes = new ProductoRoutes(productoController);\r\n        return productoRoutes;\r\n    }\r\n\r\n    public static LoginRoutes initLogin() {\r\n        AdminRepository adminRepository = new AdminRepository();\r\n        MeseroRepository meseroRepository = new MeseroRepository();\r\n        LoginService loginService = new LoginService(adminRepository, meseroRepository);\r\n        LoginController loginController = new LoginController(loginService);\r\n        LoginRoutes loginRoutes = new LoginRoutes(loginController);\r\n        return loginRoutes;\r\n    }\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/EdwarDa2/di/AppModule.java b/src/main/java/org/EdwarDa2/di/AppModule.java
+--- a/src/main/java/org/EdwarDa2/di/AppModule.java	(revision 326f86c065ee5bd9fa0ee2f26c962c1fce03678c)
++++ b/src/main/java/org/EdwarDa2/di/AppModule.java	(date 1753495786322)
+@@ -1,13 +1,10 @@
+ package org.EdwarDa2.di;
+ 
+-import io.javalin.Javalin;
+ import org.EdwarDa2.controller.*;
+ import org.EdwarDa2.repository.*;
+ import org.EdwarDa2.routes.*;
+ import org.EdwarDa2.service.*;
+ 
+-import static java.rmi.Naming.bind;
+-
+ public class AppModule {
+ 
+ 
+@@ -104,5 +101,14 @@
+         LoginRoutes loginRoutes = new LoginRoutes(loginController);
+         return loginRoutes;
+     }
++
++    public static UsuarioRoutes initUser() {
++        UserRepository userRepository = new UserRepository();
++        UserService userService = new UserService(userRepository);
++        UserController userController = new UserController(userService);
++        UsuarioRoutes usuarioRoutes = new UsuarioRoutes(userController);
++        return usuarioRoutes;
++
++    }
+ }
+ 
+Index: src/main/java/org/EdwarDa2/model/Usuario.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.EdwarDa2.model;\r\n\r\npublic class Usuario {\r\n    private int idUsuario;\r\n    private String nombre;\r\n    private String apellidoP;\r\n    private String apellidoM;\r\n    private String tipoRol;\r\n    private String clave;\r\n\r\n    // Constructor\r\n    public Usuario(int idUsuario, String nombre, String apellidoP, String apellidoM, String tipoRol, String clave) {\r\n        this.idUsuario = idUsuario;\r\n        this.nombre = nombre;\r\n        this.apellidoP = apellidoP;\r\n        this.apellidoM = apellidoM;\r\n        this.tipoRol = tipoRol;\r\n        this.clave = clave;\r\n    }\r\n\r\n    public int getIdUsuario() {\r\n        return idUsuario;\r\n    }\r\n\r\n    public void setIdUsuario(int idUsuario) {\r\n        this.idUsuario = idUsuario;\r\n    }\r\n\r\n    public String getNombre() {\r\n        return nombre;\r\n    }\r\n\r\n    public void setNombre(String nombre) {\r\n        this.nombre = nombre;\r\n    }\r\n\r\n    public String getApellidoP() {\r\n        return apellidoP;\r\n    }\r\n\r\n    public void setApellidoP(String apellidoP) {\r\n        this.apellidoP = apellidoP;\r\n    }\r\n\r\n    public String getApellidoM() {\r\n        return apellidoM;\r\n    }\r\n\r\n    public void setApellidoM(String apellidoM) {\r\n        this.apellidoM = apellidoM;\r\n    }\r\n\r\n    public String getTipoRol() {\r\n        return tipoRol;\r\n    }\r\n\r\n    public void setTipoRol(String tipoRol) {\r\n        this.tipoRol = tipoRol;\r\n    }\r\n\r\n    public String getClave() {\r\n        return clave;\r\n    }\r\n\r\n    public void setClave(String clave) {\r\n        this.clave = clave;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/EdwarDa2/model/Usuario.java b/src/main/java/org/EdwarDa2/model/Usuario.java
+--- a/src/main/java/org/EdwarDa2/model/Usuario.java	(revision 326f86c065ee5bd9fa0ee2f26c962c1fce03678c)
++++ b/src/main/java/org/EdwarDa2/model/Usuario.java	(date 1753554336282)
+@@ -3,17 +3,17 @@
+ public class Usuario {
+     private int idUsuario;
+     private String nombre;
+-    private String apellidoP;
+-    private String apellidoM;
++    private String apellido_p;
++    private String apellido_m;
+     private String tipoRol;
+     private String clave;
+ 
+     // Constructor
+-    public Usuario(int idUsuario, String nombre, String apellidoP, String apellidoM, String tipoRol, String clave) {
++    public Usuario(int idUsuario, String nombre, String apellido_p, String apellido_m, String tipoRol, String clave) {
+         this.idUsuario = idUsuario;
+         this.nombre = nombre;
+-        this.apellidoP = apellidoP;
+-        this.apellidoM = apellidoM;
++        this.apellido_p = apellido_p;
++        this.apellido_m = apellido_m;
+         this.tipoRol = tipoRol;
+         this.clave = clave;
+     }
+@@ -34,20 +34,20 @@
+         this.nombre = nombre;
+     }
+ 
+-    public String getApellidoP() {
+-        return apellidoP;
++    public String getApellido_p() {
++        return apellido_p;
+     }
+ 
+-    public void setApellidoP(String apellidoP) {
+-        this.apellidoP = apellidoP;
++    public void setApellido_p(String apellido_p) {
++        this.apellido_p = apellido_p;
+     }
+ 
+-    public String getApellidoM() {
+-        return apellidoM;
++    public String getApellido_m() {
++        return apellido_m;
+     }
+ 
+-    public void setApellidoM(String apellidoM) {
+-        this.apellidoM = apellidoM;
++    public void setApellido_m(String apellido_m) {
++        this.apellido_m = apellido_m;
+     }
+ 
+     public String getTipoRol() {
+Index: src/main/java/org/EdwarDa2/controller/UserController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/EdwarDa2/controller/UserController.java b/src/main/java/org/EdwarDa2/controller/UserController.java
+new file mode 100644
+--- /dev/null	(date 1753485611645)
++++ b/src/main/java/org/EdwarDa2/controller/UserController.java	(date 1753485611645)
+@@ -0,0 +1,69 @@
++package org.EdwarDa2.controller;
++
++import io.javalin.http.Context;
++import io.javalin.http.HttpStatus;
++import org.EdwarDa2.model.User;
++import org.EdwarDa2.service.UserService;
++
++import java.sql.SQLException;
++import java.util.List;
++
++public class UserController {
++    private final UserService userService;
++    public UserController(UserService userService) {
++        this.userService = userService;
++    }
++
++    public void getAll(Context ctx) {
++        try {
++            List<User> totals = userService.getAllUsuario();
++            ctx.json(totals);
++        } catch (SQLException e) {
++            ctx.status(500).result("Error al obtener el Usuario: " + e.getMessage());
++        }
++    }
++
++    public void getById(Context ctx) {
++        try {
++            int id = Integer.parseInt(ctx.pathParam("id_user"));
++            User user = userService.getByIdUser(id);
++            if (user != null) {
++                ctx.json(user);
++            } else {
++                ctx.status(HttpStatus.NOT_FOUND).result("Total no encontrado");
++            }
++        } catch (Exception e) {
++            ctx.status(404).result("Error al obtener totales: " + e.getMessage());
++        }
++    }
++
++    public void update(Context ctx) {
++        try {
++            int id = Integer.parseInt(ctx.pathParam("id"));
++            User user = ctx.bodyAsClass(User.class);
++            if (user.getId_usuario() != id) {
++                ctx.status(400).result("ID en la URL no coincide con el ID en el cuerpo de la solicitud.");
++                return;
++            }
++            userService.updateUser(user);
++            ctx.status(200).result("Total actualizado exitosamente");
++        } catch (NumberFormatException e) {
++            ctx.status(400).result("ID de total inválido.");
++        } catch (Exception e) {
++            e.printStackTrace();
++            ctx.status(500).result("Error al actualizar total: " + e.getMessage());
++        }
++    }
++    public void delete(Context ctx) {
++        try {
++            int id = Integer.parseInt(ctx.pathParam("id"));
++            userService.deleteUser(id);
++            ctx.status(204).result("total eliminado exitosamente");
++        } catch (NumberFormatException e) {
++            ctx.status(400).result("ID de total inválido");
++        } catch (Exception e) {
++            e.printStackTrace();
++            ctx.status(500).result("Error al eliminar total: " + e.getMessage());
++        }
++    }
++}
+\ No newline at end of file
+Index: src/main/java/org/EdwarDa2/routes/UsuarioRoutes.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/EdwarDa2/routes/UsuarioRoutes.java b/src/main/java/org/EdwarDa2/routes/UsuarioRoutes.java
+new file mode 100644
+--- /dev/null	(date 1753495786302)
++++ b/src/main/java/org/EdwarDa2/routes/UsuarioRoutes.java	(date 1753495786302)
+@@ -0,0 +1,15 @@
++package org.EdwarDa2.routes;
++
++import io.javalin.Javalin;
++import org.EdwarDa2.controller.UserController;
++
++public class UsuarioRoutes {
++    private final UserController userController;
++    public UsuarioRoutes(UserController userController) {this.userController = userController;}
++    public void register(Javalin app) {
++        app.get("/Usuarios", userController::getAll);
++        app.get("/Usuarios/{id_Usuarios}", userController::getById);
++        app.put("/Usuarios/{id}", userController::update);
++        app.delete("/Usuarios/{id}", userController::delete);
++    }
++}
+Index: src/main/java/org/EdwarDa2/repository/UserRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.EdwarDa2.repository;\r\n\r\nimport org.EdwarDa2.config.DatabaseConfig;\r\nimport org.EdwarDa2.model.User;\r\n\r\nimport java.sql.*;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\npublic class UserRepository {\r\n\r\n    // Obtener todos los usuarios\r\n    public List<User> findAll() throws SQLException {\r\n        List<User> usuarios = new ArrayList<>();\r\n        // Usamos siempre la tabla pluralizada \"usuarios\"\r\n        String query = \"SELECT id_usuario, nombre, apellido_p, apellido_m, rol FROM usuarios\";\r\n        try (Connection conn = DatabaseConfig.getDataSource().getConnection();\r\n             PreparedStatement stmt = conn.prepareStatement(query);\r\n             ResultSet rs = stmt.executeQuery()) {\r\n            while (rs.next()) {\r\n                User u = new User();\r\n                u.setId_usuario(rs.getInt(\"id_usuario\"));\r\n                u.setNombre(rs.getString(\"nombre\"));\r\n                u.setApellido_p(rs.getString(\"apellido_p\"));\r\n                u.setApellido_m(rs.getString(\"apellido_m\"));\r\n                u.setRol(rs.getInt(\"rol\"));\r\n                usuarios.add(u);\r\n            }\r\n        }\r\n        return usuarios;\r\n    }\r\n\r\n\r\n    // Obtener un usuario por ID\r\n    public User findByIdUser(int idUser) throws SQLException {\r\n        User user = null;\r\n        String query = \"SELECT id_usuario, nombre, apellido_p, apellido_m, rol FROM usuarios WHERE id_usuario = ?\";\r\n        try (Connection conn = DatabaseConfig.getDataSource().getConnection();\r\n             PreparedStatement stmt = conn.prepareStatement(query)) {\r\n            stmt.setInt(1, idUser);\r\n            try (ResultSet rs = stmt.executeQuery()) {\r\n                if (rs.next()) {\r\n                    user = new User();\r\n                    user.setId_usuario(rs.getInt(\"id_usuario\"));\r\n                    user.setNombre(rs.getString(\"nombre\"));\r\n                    user.setApellido_p(rs.getString(\"apellido_p\"));\r\n                    user.setApellido_m(rs.getString(\"apellido_m\"));\r\n                    user.setRol(rs.getInt(\"rol\"));\r\n                }\r\n            }\r\n        }\r\n        return user;\r\n    }\r\n\r\n    // Guardar un nuevo usuario\r\n    public int save(User user) throws SQLException {\r\n        String query = \"INSERT INTO usuarios (nombre, apellido_p, apellido_m, rol) VALUES (?,?,?,?)\";\r\n        int idUser = 0;\r\n        try (Connection conn = DatabaseConfig.getDataSource().getConnection();\r\n             PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {\r\n            stmt.setString(1, user.getNombre());\r\n            stmt.setString(2, user.getApellido_p());\r\n            stmt.setString(3, user.getApellido_m());\r\n            stmt.setInt(4, user.getRol());\r\n            // Ejecutamos una sola vez y obtenemos la clave generada\r\n            int rowsInserted = stmt.executeUpdate();\r\n            if (rowsInserted > 0) {\r\n                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {\r\n                    if (generatedKeys.next()) {\r\n                        idUser = generatedKeys.getInt(1);\r\n                    }\r\n                }\r\n            }\r\n        }\r\n        return idUser;\r\n    }\r\n\r\n    // Actualizar un usuario existente\r\n    public void update(User user) throws SQLException {\r\n        String query = \"UPDATE usuarios SET nombre = ?, apellido_p = ?, apellido_m = ?, rol = ? WHERE id_usuario = ?\";\r\n        try (Connection conn = DatabaseConfig.getDataSource().getConnection();\r\n             PreparedStatement stmt = conn.prepareStatement(query)) {\r\n            stmt.setString(1, user.getNombre());\r\n            stmt.setString(2, user.getApellido_p());\r\n            stmt.setString(3, user.getApellido_m());\r\n            stmt.setInt(4, user.getRol());\r\n            stmt.setInt(5, user.getId_usuario());\r\n            stmt.executeUpdate();\r\n        }\r\n    }\r\n\r\n    // Eliminar un usuario\r\n    public void delete(int idUser) throws SQLException {\r\n        String query = \"DELETE FROM usuarios WHERE id_usuario = ?\";\r\n        try (Connection conn = DatabaseConfig.getDataSource().getConnection();\r\n             PreparedStatement stmt = conn.prepareStatement(query)) {\r\n            stmt.setInt(1, idUser);\r\n            stmt.executeUpdate();\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/org/EdwarDa2/repository/UserRepository.java b/src/main/java/org/EdwarDa2/repository/UserRepository.java
+--- a/src/main/java/org/EdwarDa2/repository/UserRepository.java	(revision 326f86c065ee5bd9fa0ee2f26c962c1fce03678c)
++++ b/src/main/java/org/EdwarDa2/repository/UserRepository.java	(date 1753561347582)
+@@ -12,8 +12,7 @@
+     // Obtener todos los usuarios
+     public List<User> findAll() throws SQLException {
+         List<User> usuarios = new ArrayList<>();
+-        // Usamos siempre la tabla pluralizada "usuarios"
+-        String query = "SELECT id_usuario, nombre, apellido_p, apellido_m, rol FROM usuarios";
++        String query = "SELECT * FROM usuarios WHERE rol = 2";
+         try (Connection conn = DatabaseConfig.getDataSource().getConnection();
+              PreparedStatement stmt = conn.prepareStatement(query);
+              ResultSet rs = stmt.executeQuery()) {
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"fd6834a3-c561-46d6-8a22-4a228e1bbaea\" name=\"Changes\" comment=\"api 1.0\">\r\n      <change beforePath=\"$PROJECT_DIR$/.gradle/8.13/checksums/checksums.lock\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.gradle/8.13/checksums/checksums.lock\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.gradle/8.13/checksums/sha1-checksums.bin\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.gradle/8.13/checksums/sha1-checksums.bin\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.bin\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.bin\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.lock\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.lock\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.bin\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.bin\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.lock\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.lock\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.gradle/8.13/fileHashes/resourceHashesCache.bin\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.gradle/8.13/fileHashes/resourceHashesCache.bin\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/build/reports/problems/problems-report.html\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/build/reports/problems/problems-report.html\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"ExternalProjectsData\">\r\n    <projectState path=\"$PROJECT_DIR$\">\r\n      <ProjectState />\r\n    </projectState>\r\n  </component>\r\n  <component name=\"ExternalProjectsManager\">\r\n    <system id=\"GRADLE\">\r\n      <state>\r\n        <task path=\"$PROJECT_DIR$\">\r\n          <activation />\r\n        </task>\r\n        <projects_view>\r\n          <tree_state>\r\n            <expand>\r\n              <path>\r\n                <item name=\"\" type=\"6a2764b6:ExternalProjectsStructure$RootNode\" />\r\n                <item name=\"template_api\" type=\"f1a62948:ProjectNode\" />\r\n              </path>\r\n              <path>\r\n                <item name=\"\" type=\"6a2764b6:ExternalProjectsStructure$RootNode\" />\r\n                <item name=\"template_api\" type=\"f1a62948:ProjectNode\" />\r\n                <item name=\"Tasks\" type=\"e4a08cd1:TasksNode\" />\r\n              </path>\r\n              <path>\r\n                <item name=\"\" type=\"6a2764b6:ExternalProjectsStructure$RootNode\" />\r\n                <item name=\"template_api\" type=\"f1a62948:ProjectNode\" />\r\n                <item name=\"Tasks\" type=\"e4a08cd1:TasksNode\" />\r\n                <item name=\"shadow\" type=\"c8890929:TasksNode$1\" />\r\n              </path>\r\n              <path>\r\n                <item name=\"\" type=\"6a2764b6:ExternalProjectsStructure$RootNode\" />\r\n                <item name=\"template_api\" type=\"f1a62948:ProjectNode\" />\r\n                <item name=\"Dependencies\" type=\"6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode\" />\r\n              </path>\r\n            </expand>\r\n            <select />\r\n          </tree_state>\r\n        </projects_view>\r\n      </state>\r\n    </system>\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;cesar160&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/EdwarDa2/template_api.git&quot;,\r\n    &quot;accountId&quot;: &quot;50fae2b5-e5b8-46f6-a72e-f84abe01c132&quot;\r\n  }\r\n}</component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 3\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2z3b49ju6PgLhqXCxFDXgCcKiou\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"Gradle.Download Sources.executor\": \"Run\",\r\n    \"Gradle.Pintegrador [:org.EdwarDa2.Main.main()].executor\": \"Run\",\r\n    \"Gradle.template_api [:org.EdwarDa2.Main.main()].executor\": \"Run\",\r\n    \"Gradle.template_api [:org.alilopez.Main.main()].executor\": \"Run\",\r\n    \"Gradle.template_api [shadowJar].executor\": \"Run\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"RunOnceActivity.git.unshallow\": \"true\",\r\n    \"git-widget-placeholder\": \"main\",\r\n    \"last_opened_file_path\": \"C:/Users/cesarr/IdeaProjects/template_api\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"settings.editor.selected.configurable\": \"editor.preferences.fonts.default\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyClassDialog.RECENTS_KEY\">\r\n      <recent name=\"org.EdwarDa2.controller\" />\r\n      <recent name=\"org.EdwarDa2.repository\" />\r\n      <recent name=\"org.EdwarDa2.routes\" />\r\n      <recent name=\"org.EdwarDa2.service\" />\r\n      <recent name=\"org.EdwarDa2.DTO.comandas\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"Application.Main\">\r\n    <configuration name=\"Main\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"org.EdwarDa2.Main\" />\r\n      <module name=\"template_api.main\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"org.EdwarDa2.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"template_api [shadowJar]\" type=\"GradleRunConfiguration\" factoryName=\"Gradle\" temporary=\"true\">\r\n      <ExternalSystemSettings>\r\n        <option name=\"executionName\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"externalSystemIdString\" value=\"GRADLE\" />\r\n        <option name=\"scriptParameters\" />\r\n        <option name=\"taskDescriptions\">\r\n          <list />\r\n        </option>\r\n        <option name=\"taskNames\">\r\n          <list>\r\n            <option value=\"shadowJar\" />\r\n          </list>\r\n        </option>\r\n        <option name=\"vmOptions\" />\r\n      </ExternalSystemSettings>\r\n      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>\r\n      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>\r\n      <DebugAllEnabled>false</DebugAllEnabled>\r\n      <RunAsTest>false</RunAsTest>\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Gradle.template_api [shadowJar]\" />\r\n        <item itemvalue=\"Application.Main\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.25410.129\" />\r\n        <option value=\"bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-IU-251.25410.129\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"fd6834a3-c561-46d6-8a22-4a228e1bbaea\" name=\"Changes\" comment=\"\" />\r\n      <created>1750962510220</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1750962510220</updated>\r\n      <workItem from=\"1750962511423\" duration=\"4309000\" />\r\n      <workItem from=\"1750981954444\" duration=\"158000\" />\r\n      <workItem from=\"1750995013586\" duration=\"810000\" />\r\n      <workItem from=\"1751033860946\" duration=\"317000\" />\r\n      <workItem from=\"1751041614516\" duration=\"29000\" />\r\n      <workItem from=\"1751043728628\" duration=\"3688000\" />\r\n      <workItem from=\"1751340991649\" duration=\"342000\" />\r\n      <workItem from=\"1751343582804\" duration=\"824000\" />\r\n      <workItem from=\"1751380623857\" duration=\"3193000\" />\r\n      <workItem from=\"1751387908270\" duration=\"10000\" />\r\n      <workItem from=\"1751391989945\" duration=\"331000\" />\r\n      <workItem from=\"1751396993166\" duration=\"1782000\" />\r\n      <workItem from=\"1751411111660\" duration=\"5706000\" />\r\n      <workItem from=\"1751469587879\" duration=\"1304000\" />\r\n      <workItem from=\"1751473671802\" duration=\"505000\" />\r\n      <workItem from=\"1751476693388\" duration=\"1180000\" />\r\n      <workItem from=\"1751487755172\" duration=\"11042000\" />\r\n      <workItem from=\"1751516036481\" duration=\"3717000\" />\r\n      <workItem from=\"1751603589888\" duration=\"12553000\" />\r\n      <workItem from=\"1751644745947\" duration=\"1547000\" />\r\n      <workItem from=\"1751651449303\" duration=\"941000\" />\r\n      <workItem from=\"1751653926566\" duration=\"226000\" />\r\n      <workItem from=\"1751654167592\" duration=\"31000\" />\r\n      <workItem from=\"1751654236328\" duration=\"32000\" />\r\n      <workItem from=\"1751691223199\" duration=\"5838000\" />\r\n      <workItem from=\"1751767167929\" duration=\"2000\" />\r\n      <workItem from=\"1751769387501\" duration=\"9583000\" />\r\n      <workItem from=\"1751837622931\" duration=\"6224000\" />\r\n      <workItem from=\"1751855920340\" duration=\"6839000\" />\r\n      <workItem from=\"1751932629287\" duration=\"6648000\" />\r\n      <workItem from=\"1751940350795\" duration=\"101000\" />\r\n      <workItem from=\"1751985652605\" duration=\"1743000\" />\r\n      <workItem from=\"1752005283933\" duration=\"62000\" />\r\n      <workItem from=\"1752008191518\" duration=\"36000\" />\r\n      <workItem from=\"1752022468718\" duration=\"5287000\" />\r\n      <workItem from=\"1752029616451\" duration=\"2576000\" />\r\n      <workItem from=\"1752071088495\" duration=\"92000\" />\r\n      <workItem from=\"1752081894943\" duration=\"1830000\" />\r\n      <workItem from=\"1752096038161\" duration=\"2721000\" />\r\n      <workItem from=\"1752171872425\" duration=\"3150000\" />\r\n      <workItem from=\"1752216490713\" duration=\"668000\" />\r\n      <workItem from=\"1752251079790\" duration=\"501000\" />\r\n      <workItem from=\"1752251629482\" duration=\"3138000\" />\r\n      <workItem from=\"1752256420672\" duration=\"416000\" />\r\n      <workItem from=\"1752455880836\" duration=\"8002000\" />\r\n      <workItem from=\"1752533327641\" duration=\"7907000\" />\r\n      <workItem from=\"1752612390226\" duration=\"4635000\" />\r\n      <workItem from=\"1752628572781\" duration=\"13858000\" />\r\n      <workItem from=\"1752651759619\" duration=\"887000\" />\r\n      <workItem from=\"1752676094196\" duration=\"2292000\" />\r\n      <workItem from=\"1752681670032\" duration=\"2122000\" />\r\n      <workItem from=\"1752693218157\" duration=\"659000\" />\r\n      <workItem from=\"1752712311914\" duration=\"7298000\" />\r\n      <workItem from=\"1752727268272\" duration=\"654000\" />\r\n      <workItem from=\"1752769331668\" duration=\"3138000\" />\r\n      <workItem from=\"1752773210118\" duration=\"1885000\" />\r\n      <workItem from=\"1752776374831\" duration=\"3000\" />\r\n      <workItem from=\"1752787856272\" duration=\"198000\" />\r\n      <workItem from=\"1752800201977\" duration=\"16665000\" />\r\n      <workItem from=\"1752822088712\" duration=\"1594000\" />\r\n      <workItem from=\"1752855632889\" duration=\"1754000\" />\r\n      <workItem from=\"1752858759546\" duration=\"802000\" />\r\n      <workItem from=\"1752947515185\" duration=\"38078000\" />\r\n      <workItem from=\"1753043324995\" duration=\"89000\" />\r\n      <workItem from=\"1753043535142\" duration=\"9029000\" />\r\n      <workItem from=\"1753071409635\" duration=\"1990000\" />\r\n      <workItem from=\"1753118203257\" duration=\"5925000\" />\r\n      <workItem from=\"1753146901443\" duration=\"14271000\" />\r\n      <workItem from=\"1753170467955\" duration=\"719000\" />\r\n      <workItem from=\"1753196024334\" duration=\"8038000\" />\r\n      <workItem from=\"1753215377700\" duration=\"3495000\" />\r\n      <workItem from=\"1753229745899\" duration=\"91000\" />\r\n      <workItem from=\"1753231820451\" duration=\"555000\" />\r\n      <workItem from=\"1753263950375\" duration=\"198000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"AVISOSNEW\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1753071660142</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1753071660142</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"api 1.0\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1753260547129</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1753260547129</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"3\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"UnknownFeatures\">\r\n    <option featureType=\"com.intellij.fileTypeFactory\" implementationName=\".env\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"AVISOSNEW\" />\r\n    <MESSAGE value=\"api 1.0\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"api 1.0\" />\r\n  </component>\r\n  <component name=\"XDebuggerManager\">\r\n    <breakpoint-manager>\r\n      <breakpoints>\r\n        <breakpoint enabled=\"true\" type=\"java-exception\">\r\n          <properties class=\"java.sql.SQLSyntaxErrorException\" package=\"java.sql\" />\r\n          <option name=\"timeStamp\" value=\"1\" />\r\n        </breakpoint>\r\n      </breakpoints>\r\n    </breakpoint-manager>\r\n  </component>\r\n  <component name=\"XSLT-Support.FileAssociations.UIState\">\r\n    <expand />\r\n    <select />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 326f86c065ee5bd9fa0ee2f26c962c1fce03678c)
++++ b/.idea/workspace.xml	(date 1753669710620)
+@@ -5,16 +5,13 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="fd6834a3-c561-46d6-8a22-4a228e1bbaea" name="Changes" comment="api 1.0">
+-      <change beforePath="$PROJECT_DIR$/.gradle/8.13/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/checksums/checksums.lock" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.gradle/8.13/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/checksums/sha1-checksums.bin" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.bin" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/executionHistory/executionHistory.lock" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.bin" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/fileHashes/fileHashes.lock" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.gradle/8.13/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.13/fileHashes/resourceHashesCache.bin" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/org/EdwarDa2/controller/UserController.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/src/main/java/org/EdwarDa2/routes/UsuarioRoutes.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/org/EdwarDa2/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/EdwarDa2/Main.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/org/EdwarDa2/di/AppModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/EdwarDa2/di/AppModule.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/org/EdwarDa2/model/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/EdwarDa2/model/Usuario.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/org/EdwarDa2/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/EdwarDa2/repository/UserRepository.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -96,13 +93,15 @@
+   "keyToString": {
+     "Gradle.Download Sources.executor": "Run",
+     "Gradle.Pintegrador [:org.EdwarDa2.Main.main()].executor": "Run",
++    "Gradle.RestApp [:org.EdwarDa2.Main.main()].executor": "Run",
+     "Gradle.template_api [:org.EdwarDa2.Main.main()].executor": "Run",
+     "Gradle.template_api [:org.alilopez.Main.main()].executor": "Run",
+     "Gradle.template_api [shadowJar].executor": "Run",
+     "RunOnceActivity.ShowReadmeOnStart": "true",
+     "RunOnceActivity.git.unshallow": "true",
+     "git-widget-placeholder": "main",
+-    "last_opened_file_path": "C:/Users/cesarr/IdeaProjects/template_api",
++    "ignore.virus.scanning.warn.message": "true",
++    "last_opened_file_path": "C:/Users/HP/IdeaProjects/RestApp",
+     "node.js.detected.package.eslint": "true",
+     "node.js.detected.package.tslint": "true",
+     "node.js.selected.package.eslint": "(autodetect)",
+@@ -253,6 +252,7 @@
+       <workItem from="1753229745899" duration="91000" />
+       <workItem from="1753231820451" duration="555000" />
+       <workItem from="1753263950375" duration="198000" />
++      <workItem from="1753483977048" duration="26595000" />
+     </task>
+     <task id="LOCAL-00001" summary="AVISOSNEW">
+       <option name="closed" value="true" />
